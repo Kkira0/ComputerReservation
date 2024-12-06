@@ -44,13 +44,11 @@
                 <td>{{ $pieteikums->start_time }}</td>
                 <td>{{ $pieteikums->end_time }}</td>
                 <td>
-                    <!-- Approve Button -->
                     <form action="{{ route('admin.pieteikums.approve', $pieteikums->pieteikuma_id) }}" method="POST" style="display: inline-block;">
                         @csrf
                         <button class="btn btn-success btn-sm">Approve</button>
                     </form>
 
-                    <!-- Deny Button -->
                     <form action="{{ route('admin.pieteikums.deny', $pieteikums->pieteikuma_id) }}" method="POST" style="display: inline-block;">
                         @csrf
                         <button class="btn btn-danger btn-sm">Deny</button>

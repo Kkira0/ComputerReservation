@@ -8,50 +8,23 @@
 <body>
 
     <h1>Create a Reservation</h1>
-    
-    <form action="{{ route('pieteikums.store') }}" method="POST">
+    <form action="{{ route('rezervacija.store') }}" method="POST">
     @csrf
-    <div>
-        <label for="first_name">First Name</label>
-        <input type="text" name="first_name" required>
-    </div>
-    
-    <div>
-        <label for="last_name">Last Name</label>
-        <input type="text" name="last_name" required>
-    </div>
-    
-    <div>
-        <label for="phone">Phone</label>
-        <input type="text" name="phone" required>
-    </div>
-    
-    <div>
-        <label for="email">Email</label>
-        <input type="email" name="email" required>
-    </div>
-    
-    <div>
-        <label for="start_time">Start Time</label>
-        <input type="datetime-local" name="start_time" required>
-    </div>
-    
-    <div>
-        <label for="end_time">End Time</label>
-        <input type="datetime-local" name="end_time" required>
-    </div>
-    
-    <div>
-        <label for="computer_id">Select Computer</label>
-        <select name="computer_id" required>
-            @foreach ($computers as $computer)
-                <option value="{{ $computer->Computer_ID }}">{{ $computer->PC_Name }}</option>
-            @endforeach
-        </select>
-    </div>
-    
-    <button type="submit">Submit Reservation</button>
+    <label for="computer_id">Computer ID:</label>
+    <input type="number" name="computer_id" required><br>
+
+    <label for="pieteikums_id">Pieteikums ID:</label>
+    <input type="number" name="pieteikums_id" required><br>
+
+    <label for="start_time">Start Time:</label>
+    <input type="datetime-local" name="start_time" required><br>
+
+    <label for="end_time">End Time:</label>
+    <input type="datetime-local" name="end_time" required><br>
+
+    <button type="submit">Create Reservation</button>
 </form>
+
 
 
 </body>

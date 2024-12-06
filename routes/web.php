@@ -30,9 +30,12 @@ Route::get('/pc_parts', [PC_Parts_Controller::class, 'index']);
 Route::get('/pieteikums', [Pieteikums_Controller::class, 'index'])->name('pieteikums.index');
 Route::get('/pieteikums/create', [Pieteikums_Controller::class, 'create'])->name('pieteikums.create');
 Route::post('/pieteikums', [Pieteikums_Controller::class, 'store'])->name('pieteikums.store');
-Route::get('/rezervacija', [Rezervacija_Controller::class, 'index']);
-Route::get('/reservations/create', [ReservationController::class, 'create']);
-Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
+
+Route::get('/rezervacija', [Rezervacija_Controller::class, 'index'])->name('rezervacija.index');
+Route::get('/rezervacija/create', [Rezervacija_Controller::class, 'create'])->name('rezervacija.create');  // Correct the controller
+Route::post('/rezervacija', [Rezervacija_Controller::class, 'store'])->name('rezervacija.store');
+
+
 Route::get('/roles', [Roles_Controller::class, 'index']);
 Route::get('/software', [Software_Controller::class, 'index']);
 Route::get('/users', [Users_Controller::class, 'index']);

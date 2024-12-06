@@ -12,44 +12,79 @@ class Rezervacija_Controller
     //
     public function index()
     {
-        $rezervacija = Rezervacija::all();
-
-        return view('rezervacija.index', ['rezervacija' => $rezervacija]);
-    }
-
-    public function create()
-    {
-        $computers = Computer::all();
-        $pieteikums = Pieteikums::all();
-        return view('rezervacija.create', compact('computers', 'pieteikums'));
+        $rezervacijas = Rezervacija::with(['pieteikums', 'computer'])->get();
+        return view('rezervacija.index', compact('rezervacijas'));
     }
 
     public function createFromPieteikums($pieteikumsId)
     {
         $pieteikums = Pieteikums::findOrFail($pieteikumsId);
-
+    
         if ($pieteikums->status !== 'approved') {
-            return redirect()->route('admin.dashboard')->with('error', 'Only approved pieteikumi can be converted to reservations.');
+            return redirect()->route('admin.dashboard')->with('error', 'Pieteikums must be approved first.');
+        }
+    
+        $computer = Computer::find($pieteikums->Computers); 
+        if (!$computer) {
+            return redirect()->route('admin.dashboard')->with('error', 'The associated computer does not exist.');
         }
 
-        return view('admin.rezervacija.create', compact('pieteikums'));
+        $conflictingRezervacija = Rezervacija::where('Computer_id', $computer->Computer_ID)
+            ->where(function ($query) use ($pieteikums) {
+                $query->whereBetween('start_time', [$pieteikums->start_time, $pieteikums->end_time])
+                    ->orWhereBetween('end_time', [$pieteikums->start_time, $pieteikums->end_time]);
+            })->first();
+    
+        if ($conflictingRezervacija) {
+            return redirect()->route('admin.dashboard')->with('error', 'This computer is already reserved for the selected time.');
+        }
+    
+        $rezervacija = Rezervacija::create([
+            'pieteikuma_id' => $pieteikums->pieteikuma_id,
+            'Computer_id' => $pieteikums->Computers,
+            'start_time' => $pieteikums->start_time,
+            'end_time' => $pieteikums->end_time,
+        ]);
+    
+        return redirect()->route('admin.dashboard')->with('success', 'Rezervacija created successfully!');
     }
-
+    
     public function store(Request $request)
     {
+        Log::info('Request Data:', $request->all());
+
         $request->validate([
-            'computer_id' => 'required|exists:computers,Computer_ID',
+            'Computers' => 'required|exists:computer,Computer_ID', 
+            'pieteikuma_id' => 'required|exists:pieteikums,pieteikuma_id',
             'start_time' => 'required|date',
             'end_time' => 'required|date|after:start_time',
         ]);
+        
 
-        $rezervacija = new Rezervacija();
-        $rezervacija->Computer_ID = $request->computer_id;
-        $rezervacija->Pieteikuma_id = $request->pieteikuma_id;
-        $rezervacija->start_time = $request->start_time;
-        $rezervacija->end_time = $request->end_time;
-        $rezervacija->save();
-
-        return redirect()->route('admin.dashboard')->with('success', 'Reservation created successfully!');
+        Log::info('Validated Data:', $validated); 
+        $rezervacija = Rezervacija::create([
+            'pieteikuma_id' => $pieteikums->pieteikuma_id,
+            'Computer_id' => $pieteikums->Computers,
+            'start_time' => $pieteikums->start_time,
+            'end_time' => $pieteikums->end_time,
+        ]);
+        try {
+            $rezervacija = new Rezervacija();
+            $rezervacija->pieteikuma_id = $validated['pieteikuma_id'];
+            $rezervacija->Computer_id = $validated['Computers']; 
+            $rezervacija->start_time = $validated['start_time'];
+            $rezervacija->end_time = $validated['end_time'];
+        
+            if ($rezervacija->save()) {
+                Log::info('Rezervacija created successfully', ['id' => $rezervacija->id]);
+                return redirect()->route('rezervacija.index')->with('success', 'Rezervacija created successfully.');
+            } else {
+                Log::error('Error saving rezervacija.');
+                return back()->withErrors('Error saving rezervacija.');
+            }
+        } catch (\Exception $e) {
+            Log::error('Error creating rezervacija:', ['message' => $e->getMessage()]);
+            return back()->withErrors('Error creating rezervacija.');
+        }
     }
-}
+}        

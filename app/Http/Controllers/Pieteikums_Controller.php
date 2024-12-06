@@ -25,9 +25,7 @@ class Pieteikums_Controller
     
     public function store(Request $request)
 {
-    // Check if the user is authenticated
     
-        // Validate the request
         $request->validate([
             'first_name' => 'required|string',
             'last_name' => 'required|string',
@@ -38,7 +36,6 @@ class Pieteikums_Controller
             'computers' => 'required|exists:computer,Computer_ID',
         ]);
 
-        // Create the reservation
         Pieteikums::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
@@ -47,8 +44,8 @@ class Pieteikums_Controller
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,
             'Computers' => $request->computers,
-            'user_id' => $request->idUsers, // Use the correct primary key (idUsers)
-            'status' => 'pending', // Default status for new pieteikums
+            'user_id' => $request->idUsers, 
+            'status' => 'pending',
         ]);
 
         return redirect()->route('pieteikums.index')->with('success', 'Reservation request created!');
