@@ -8,14 +8,50 @@
 <body>
     <h1>List of Rezervacijas</h1>
     <ul>
-        @foreach ($rezervacijas as $rezervacija)
-            <li>
-                Computer ID: {{ $rezervacija->Computer_ID }}<br>
-                Pieteikuma ID: {{ $rezervacija->Pieteikuma_id ?? 'N/A' }}<br>
-                Start Time: {{ $rezervacija->start_time }}<br>
-                End Time: {{ $rezervacija->end_time }}
-            </li>
-        @endforeach
+    
+
+@section('content')
+<div class="container mt-5">
+    <h1>All Reservations</h1>
+
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Computer</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($rezervacijas as $rezervacija)
+                <tr>
+                    <td>{{ $rezervacija->pieteikums->user ? $rezervacija->pieteikums->user->first_name . ' ' . $rezervacija->pieteikums->user->last_name : 'User not found' }}</td>
+                    <td>{{ $rezervacija->computer->PC_Name }}</td>
+                    <td>{{ $rezervacija->start_time }}</td>
+                    <td>{{ $rezervacija->end_time }}</td>
+                    <td>
+                        <form action="{{ route('rezervacija.deny', $rezervacija->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Deny</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+@endsection
+
+
     </ul>
 </body>
 </html>

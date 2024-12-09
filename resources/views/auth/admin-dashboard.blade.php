@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Document</title>
 </head>
 <body>
 @extends('layouts.app')
@@ -26,35 +25,23 @@
         </thead>
         <tbody>
             @foreach ($pendingPieteikumi as $pieteikums)
-            <tr>
-            <td>
-        @if ($pieteikums->user)
-            {{ $pieteikums->user->first_name }} {{ $pieteikums->user->last_name }}
-        @else
-            User not found
-        @endif
-    </td>
-    <td>
-        @if ($pieteikums->computer)
-            {{ $pieteikums->computer->PC_Name }}
-        @else
-            Computer not found
-        @endif
-    </td>
-                <td>{{ $pieteikums->start_time }}</td>
-                <td>{{ $pieteikums->end_time }}</td>
-                <td>
-                    <form action="{{ route('admin.pieteikums.approve', $pieteikums->pieteikuma_id) }}" method="POST" style="display: inline-block;">
-                        @csrf
-                        <button class="btn btn-success btn-sm">Approve</button>
-                    </form>
+                <tr>
+                    <td>{{ $pieteikums->user ? $pieteikums->user->first_name . ' ' . $pieteikums->user->last_name : 'User not found' }}</td>
+                    <td>{{ $pieteikums->computer ? $pieteikums->computer->PC_Name : 'Computer not found' }}</td>
+                    <td>{{ $pieteikums->start_time }}</td>
+                    <td>{{ $pieteikums->end_time }}</td>
+                    <td>
+                        <form action="{{ route('admin.pieteikums.approve', $pieteikums->pieteikuma_id) }}" method="POST" style="display: inline-block;">
+                            @csrf
+                            <button class="btn btn-success btn-sm">Approve</button>
+                        </form>
 
-                    <form action="{{ route('admin.pieteikums.deny', $pieteikums->pieteikuma_id) }}" method="POST" style="display: inline-block;">
-                        @csrf
-                        <button class="btn btn-danger btn-sm">Deny</button>
-                    </form>
-                </td>
-            </tr>
+                        <form action="{{ route('admin.pieteikums.deny', $pieteikums->pieteikuma_id) }}" method="POST" style="display: inline-block;">
+                            @csrf
+                            <button class="btn btn-danger btn-sm">Deny</button>
+                        </form>
+                    </td>
+                </tr>
             @endforeach
         </tbody>
     </table>

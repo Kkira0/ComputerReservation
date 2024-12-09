@@ -14,11 +14,16 @@ class Users extends Model
 
     public function role()
     {
-        return $this->belongsTo(Roles::class, 'idRoles', 'idRoles'); // Reference the correct foreign and primary key
+        return $this->belongsTo(Roles::class, 'idRoles', 'idRoles'); 
     }
 
     public function verifyPlainTextPassword($password)
     {
-        return $this->password === $password;  // Compare plain text password
+        return $this->password === $password;  
+    }
+
+    public function pieteikumi()
+    {
+        return $this->hasMany(Pieteikums::class, 'user_id', 'idUsers');
     }
 }

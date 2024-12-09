@@ -32,7 +32,7 @@ Route::get('/pieteikums/create', [Pieteikums_Controller::class, 'create'])->name
 Route::post('/pieteikums', [Pieteikums_Controller::class, 'store'])->name('pieteikums.store');
 
 Route::get('/rezervacija', [Rezervacija_Controller::class, 'index'])->name('rezervacija.index');
-Route::get('/rezervacija/create', [Rezervacija_Controller::class, 'create'])->name('rezervacija.create');  // Correct the controller
+Route::get('/rezervacija/create', [Rezervacija_Controller::class, 'create'])->name('rezervacija.create'); 
 Route::post('/rezervacija', [Rezervacija_Controller::class, 'store'])->name('rezervacija.store');
 
 
@@ -50,7 +50,18 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'adminIndex'])->name('admin.dashboard');
     Route::post('/admin/pieteikumi/{id}/approve', [Pieteikums_Controller::class, 'approve'])->name('admin.pieteikums.approve');
     Route::post('/admin/pieteikumi/{id}/deny', [Pieteikums_Controller::class, 'deny'])->name('admin.pieteikums.deny');
-    Route::get('/admin/rezervacija/create/{pieteikums}', [Rezervacija_Controller::class, 'createFromPieteikums'])->name('admin.rezervacija.create');
-    Route::post('/admin/rezervacija/store', [Rezervacija_Controller::class, 'store'])->name('admin.rezervacija.store');
+    Route::get('/admin/rezervacija', [Rezervacija_Controller::class, 'index'])->name('rezervacija.index');
+
+    // Store a reservation after approving Pieteikums
+    Route::post('/admin/pieteikums/{pieteikums}/rezervacija', [Rezervacija_Controller::class, 'store'])->name('rezervacija.store');
+
+    // Cancel a reservation
+    Route::delete('/admin/rezervacija/{id}', [Rezervacija_Controller::class, 'deny'])->name('rezervacija.deny');
+
+
+    // View reservation details
+    Route::get('/admin/rezervacija/{id}', [Rezervacija_Controller::class, 'show'])->name('rezervacija.show');
 });
+
+
 
