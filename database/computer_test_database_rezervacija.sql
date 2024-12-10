@@ -25,14 +25,14 @@ DROP TABLE IF EXISTS `rezervacija`;
 CREATE TABLE `rezervacija` (
   `Rezervacijas_ID` int NOT NULL AUTO_INCREMENT,
   `pieteikuma_id` int DEFAULT NULL,
-  `Computer_id` int DEFAULT NULL,
+  `Computer_ID` int DEFAULT NULL,
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
   PRIMARY KEY (`Rezervacijas_ID`),
   UNIQUE KEY `Rezervacijas_ID_UNIQUE` (`Rezervacijas_ID`),
-  KEY `fk_Rezervacija_Computer1_idx` (`Computer_id`),
+  KEY `fk_Rezervacija_Computer1_idx` (`Computer_ID`),
   KEY `fk_Rezervacija_Pieteikums1_idx` (`pieteikuma_id`),
-  CONSTRAINT `fk_Rezervacija_Computer1` FOREIGN KEY (`Computer_id`) REFERENCES `computer` (`Computer_ID`),
+  CONSTRAINT `fk_Rezervacija_Computer1` FOREIGN KEY (`Computer_ID`) REFERENCES `computer` (`Computer_ID`),
   CONSTRAINT `fk_Rezervacija_Pieteikums1` FOREIGN KEY (`pieteikuma_id`) REFERENCES `pieteikums` (`pieteikuma_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;

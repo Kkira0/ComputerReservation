@@ -12,11 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('pieteikums', function (Blueprint $table) {
-            // Add the user_id column
-            $table->unsignedBigInteger('user_id')->nullable();
-
-            // You can optionally add a foreign key constraint if user_id should reference the Users table
-            $table->foreign('user_id')->references('id')->on('Users')->onDelete('set null');
+            // Check if the column exists before adding it
+            if (!Schema::hasColumn('pieteikums', 'user_id')) {
+                $table->unsignedBigInteger('user_id')->nullable();
+            }
+    
+            // Add the foreign key constraint, referencing 'idUsers' in the 'users' table
+            if (!DB::select("SHOW KEYS FROM pieteikums WHERE Key_name = 'pieteikums_user_id_foreign'")) {
+                $table->foreign('user_id')->references('idUsers')->on('users')->onDelete('cascade');
+            }
         });
     }
 
@@ -26,9 +30,12 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('pieteikums', function (Blueprint $table) {
-            // Drop the user_id column and foreign key constraint
-            $table->dropForeign(['user_id']);
-            $table->dropColumn('user_id');
+            // Check if the foreign key exists before attempting to drop it
+            $foreignKeyName = 'pieteikums_user_id_foreign';
+    
+            if (DB::select("SHOW KEYS FROM pieteikums WHERE Key_name = ?", [$foreignKeyName])) {
+                $table->dropForeign($foreignKeyName);
+            }
         });
     }
 };

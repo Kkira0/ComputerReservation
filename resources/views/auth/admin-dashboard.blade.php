@@ -26,8 +26,8 @@
         <tbody>
             @foreach ($pendingPieteikumi as $pieteikums)
                 <tr>
-                    <td>{{ $pieteikums->user ? $pieteikums->user->first_name . ' ' . $pieteikums->user->last_name : 'User not found' }}</td>
-                    <td>{{ $pieteikums->computer ? $pieteikums->computer->PC_Name : 'Computer not found' }}</td>
+                    <td>{{ $pieteikums->pieteikuma_id }}</td>
+                    <td>{{ $pieteikums->computer->Computer_ID }}</td>
                     <td>{{ $pieteikums->start_time }}</td>
                     <td>{{ $pieteikums->end_time }}</td>
                     <td>

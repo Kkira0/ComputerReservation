@@ -36,40 +36,32 @@ public function adminIndex()
 }
 
 
-    public function approvePieteikums($id)
-    {
-        $pieteikums = Pieteikums::findOrFail($id);
+public function approvePieteikums($id)
+{
+    $pieteikums = Pieteikums::findOrFail($id);
 
-        // Ensure the Pieteikums is not already processed
-        if ($pieteikums->status !== 'pending') {
-            return redirect()->route('admin.dashboard')->with('error', 'Pieteikums has already been processed.');
-        }
-
-        // Update the status to approved
-        $pieteikums->status = 'approved';
-        $pieteikums->save();
-
-        // Create a Rezervacija directly
-        Rezervacija::create([
-            'Computer_id' => $pieteikums->Computers, // Assuming 'Computers' maps to the Computer_id field
-            'pieteikuma_id' => $pieteikums->pieteikuma_id,
-            'start_time' => $pieteikums->start_time,
-            'end_time' => $pieteikums->end_time,
-        ]);
-
-        return redirect()->route('admin.dashboard')->with('success', 'Pieteikums approved, and Rezervacija created successfully.');
+    // Ensure the Pieteikums is not already processed
+    if ($pieteikums->status !== 'pending') {
+        return redirect()->route('admin.dashboard')->with('error', 'Pieteikums has already been processed.');
     }
 
-    public function denyPieteikums($id)
-    {
-        $pieteikums = Pieteikums::findOrFail($id);
+    // Update the status to approved
+    $pieteikums->status = 'approved';
+    $pieteikums->save();
 
-        // Set the status to declined
-        $pieteikums->status = 'declined';
-        $pieteikums->save();
+    // Call the store method in Rezervacija_Controller to create a new reservation
+    return redirect()->route('rezervacija.store', $pieteikums->id);
+}
 
-        return redirect()->route('admin.dashboard')->with('error', 'Reservation denied!');
-    }
+public function denyPieteikums($id)
+{
+    $pieteikums = Pieteikums::findOrFail($id);
 
+    // Set the status to declined
+    $pieteikums->status = 'declined';
+    $pieteikums->save();
+
+    return redirect()->route('admin.dashboard')->with('error', 'Pieteikums denied!');
+}
 }
 

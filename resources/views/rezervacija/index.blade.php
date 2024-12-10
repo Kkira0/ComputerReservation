@@ -8,45 +8,35 @@
 <body>
     <h1>List of Rezervacijas</h1>
     <ul>
-    
+
+    @extends('layouts.app')
 
 @section('content')
-<div class="container mt-5">
-    <h1>All Reservations</h1>
-
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    <table class="table table-striped">
+<div class="container">
+    <h1>Rezervācijas</h1>
+    <a href="{{ route('rezervacija.create') }}" class="btn btn-primary mb-3">Izveidot jaunu rezervāciju</a>
+    <table class="table table-bordered">
         <thead>
             <tr>
-                <th>User</th>
-                <th>Computer</th>
-                <th>Start Time</th>
-                <th>End Time</th>
-                <th>Actions</th>
+                <th>ID</th>
+                <th>Dators</th>
+                <th>Pieteikums</th>
+                <th>Sākuma laiks</th>
+                <th>Beigu laiks</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($rezervacijas as $rezervacija)
-                <tr>
-                    <td>{{ $rezervacija->pieteikums->user ? $rezervacija->pieteikums->user->first_name . ' ' . $rezervacija->pieteikums->user->last_name : 'User not found' }}</td>
-                    <td>{{ $rezervacija->computer->PC_Name }}</td>
-                    <td>{{ $rezervacija->start_time }}</td>
-                    <td>{{ $rezervacija->end_time }}</td>
-                    <td>
-                        <form action="{{ route('rezervacija.deny', $rezervacija->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Deny</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
+    @foreach($rezervacijas as $rezervacija)
+    <tr>
+        <td>{{ $rezervacija->Rezervacijas_ID }}</td>
+        <td>{{ $rezervacija->computer->PC_Name ?? 'N/A' }}</td>
+        <td>{{ $rezervacija->pieteikums->pieteikuma_id ?? 'N/A' }}</td>
+        <td>{{ $rezervacija->start_time }}</td>
+        <td>{{ $rezervacija->end_time }}</td>
+    </tr>
+    @endforeach
+</tbody>
+
     </table>
 </div>
 @endsection
@@ -54,4 +44,7 @@
 
     </ul>
 </body>
+<script>
+    console.log("kawk")
+</script>
 </html>

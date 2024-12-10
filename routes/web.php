@@ -31,10 +31,14 @@ Route::get('/pieteikums', [Pieteikums_Controller::class, 'index'])->name('pietei
 Route::get('/pieteikums/create', [Pieteikums_Controller::class, 'create'])->name('pieteikums.create');
 Route::post('/pieteikums', [Pieteikums_Controller::class, 'store'])->name('pieteikums.store');
 
-Route::get('/rezervacija', [Rezervacija_Controller::class, 'index'])->name('rezervacija.index');
-Route::get('/rezervacija/create', [Rezervacija_Controller::class, 'create'])->name('rezervacija.create'); 
-Route::post('/rezervacija', [Rezervacija_Controller::class, 'store'])->name('rezervacija.store');
+// Route::get('/rezervacija', [Rezervacija_Controller::class, 'index'])->name('rezervacija.index');
+// Route::get('/rezervacija/create', [Rezervacija_Controller::class, 'create'])->name('rezervacija.create'); 
+// Route::delete('/rezervacija/{id}', [Rezervacija_Controller::class, 'deny'])->name('rezervacija.deny');
+// Route::get('/rezervacija/store/{pieteikums}', [Rezervacija_Controller::class, 'store'])->name('rezervacija.store');
 
+Route::get('rezervacija', [Rezervacija_Controller::class, 'index'])->name('rezervacija.index');
+Route::get('rezervacija/create', [Rezervacija_Controller::class, 'create'])->name('rezervacija.create');
+Route::post('rezervacija', [Rezervacija_Controller::class, 'store'])->name('rezervacija.store');
 
 Route::get('/roles', [Roles_Controller::class, 'index']);
 Route::get('/software', [Software_Controller::class, 'index']);
@@ -50,17 +54,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'adminIndex'])->name('admin.dashboard');
     Route::post('/admin/pieteikumi/{id}/approve', [Pieteikums_Controller::class, 'approve'])->name('admin.pieteikums.approve');
     Route::post('/admin/pieteikumi/{id}/deny', [Pieteikums_Controller::class, 'deny'])->name('admin.pieteikums.deny');
-    Route::get('/admin/rezervacija', [Rezervacija_Controller::class, 'index'])->name('rezervacija.index');
 
-    // Store a reservation after approving Pieteikums
-    Route::post('/admin/pieteikums/{pieteikums}/rezervacija', [Rezervacija_Controller::class, 'store'])->name('rezervacija.store');
-
-    // Cancel a reservation
-    Route::delete('/admin/rezervacija/{id}', [Rezervacija_Controller::class, 'deny'])->name('rezervacija.deny');
-
-
-    // View reservation details
-    Route::get('/admin/rezervacija/{id}', [Rezervacija_Controller::class, 'show'])->name('rezervacija.show');
 });
 
 
