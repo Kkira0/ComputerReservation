@@ -16,7 +16,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>User</th>
+                <th>Pieteikuma_id</th>
                 <th>Requested Computer</th>
                 <th>Start Time</th>
                 <th>End Time</th>

@@ -21,6 +21,7 @@ class Pieteikums_Controller
         $computers = Computer::all(); 
         return view('pieteikums.create', compact('computers'));
     }
+    
  
     
 //     public function store(Request $request)
@@ -71,7 +72,7 @@ public function store(Request $request)
         'start_time' => $request->start_time,
         'end_time' => $request->end_time,
         'Computers' => $request->computers,
-        'user_id' => auth()->id(),  // Assuming the user is logged in
+        'user_id' => auth()->id(), 
         'status' => 'pending',
     ]);
 
@@ -80,14 +81,20 @@ public function store(Request $request)
 
 
 
-
     public function approve($id)
     {
         $pieteikums = Pieteikums::findOrFail($id);
         $pieteikums->status = 'approved';
         $pieteikums->save();
-
-        return redirect()->route('admin.dashboard')->with('success', 'Pieteikums approved successfully!');
+        //dd($pieteikums);
+        $computer = $pieteikums->computer; 
+        Rezervacija::create([
+            'Computer_ID' => $computer->Computer_ID,   
+            'pieteikuma_id' => $pieteikums->pieteikuma_id, 
+            'start_time' => $pieteikums->start_time,      
+            'end_time' => $pieteikums->end_time,          
+        ]);
+        return redirect()->route('rezervacija.index')->with('success', 'Failes Successfully! Pieteikums approved successfully!');
     }
 
 

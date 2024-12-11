@@ -13,28 +13,21 @@ class Computer extends Model
     protected $primaryKey = "Computer_ID";
     public $timestamps = false;
 
-
-
     public function softwares()
     {
         return $this->belongsToMany(Software::class, 'computer_software', 'Computer_ID', 'Software_ID');
     }
 
-    // Many-to-Many relationship with PC_Parts
     public function pc_parts()
     {
         return $this->belongsToMany(PC_Parts::class, 'computer_parts', 'Computer_ID', 'Part_ID');
     }
 
-    
-
-    // Many-to-many relationship with Pieteikums (reservations)
     public function pieteikumi()
     {
-        return $this->hasMany(Pieteikums::class, 'Computers', 'Computer_ID'); // Match foreign key
+        return $this->hasMany(Pieteikums::class, 'Computers', 'Computer_ID'); 
     }
 
-    // Many-to-many relationship with Config (via Computer_Config pivot table)
     public function configs()
     {
         return $this->belongsToMany(Config::class, 'computer_config', 'Computer_ID', 'Config_id');

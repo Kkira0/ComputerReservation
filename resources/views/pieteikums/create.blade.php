@@ -10,7 +10,7 @@
     <div class="container mt-5">
         <h1 class="text-center mb-4">Create a New Reservation</h1>
 
-        <!-- Check if there are any validation errors -->
+        
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -21,7 +21,7 @@
             </div>
         @endif
 
-        <!-- Reservation Form -->
+        
         <form action="{{ route('pieteikums.store') }}" method="POST">
             @csrf
             <div class="mb-3">
@@ -40,26 +40,26 @@
                 <label for="phone" class="form-label">Phone</label>
                 <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone') }}" required>
             </div>
-            <!-- Assuming the Computer is being selected by the user -->
-            <div class="mb-3">
-                <label for="computers" class="form-label">Select Computer</label>
-                <select name="computers" id="computers" class="form-control" required>
-                    @foreach ($computers as $computer)
-                        <option value="{{ $computer->Computer_ID }}">{{ $computer->PC_Name }} - {{ $computer->Operating_System }}</option>
-                    @endforeach
-                </select>
-            </div>
+            
+                <div class="mb-3">
+            <label for="computers" class="form-label">Select Computer</label>
+            <select name="computers" id="computers" class="form-control" required>
+                <option value="" disabled selected>Select a computer</option>
+                @foreach ($computers as $computer)
+                    <option value="{{ $computer->Computer_ID }}">{{ $computer->PC_Name }} - {{ $computer->Operating_System }}</option>
+                @endforeach
+            </select>
+        </div>
 
-            <div class="mb-3">
-                <label for="start_time" class="form-label">Start Time</label>
-                <input type="datetime-local" class="form-control" id="start_time" name="start_time" required>
-            </div>
+        <div class="mb-3">
+            <label for="start_time" class="form-label">Start Time</label>
+            <input type="datetime-local" class="form-control" id="start_time" name="start_time" required>
+        </div>
 
-            <div class="mb-3">
-                <label for="end_time" class="form-label">End Time</label>
-                <input type="datetime-local" class="form-control" id="end_time" name="end_time" required>
-            </div>
-
+        <div class="mb-3">
+            <label for="end_time" class="form-label">End Time</label>
+            <input type="datetime-local" class="form-control" id="end_time" name="end_time" required>
+                </div>
             <button type="submit" class="btn btn-primary">Create Reservation</button>
         </form>
     </div>

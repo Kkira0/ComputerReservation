@@ -10,14 +10,12 @@ use Illuminate\Http\Request;
 class Rezervacija_Controller
 {
 
-// Show all reservations
 public function index()
 {
     $rezervacijas = Rezervacija::with(['pieteikums', 'computer'])->get();
     return view('rezervacija.index', compact('rezervacijas'));
 }
 
-// Show the form for creating a new reservation
 public function create()
 {
     $pieteikumi = Pieteikums::all();
@@ -25,21 +23,54 @@ public function create()
     return view('rezervacija.create', compact('pieteikumi', 'computers'));
 }
 
-// Store a newly created reservation
+// public function store(Request $request)
+// {
+//     $validated = $request->validate([
+//         'Computer_ID' => 'required|exists:computer,Computer_ID',
+//         'pieteikuma_id' => 'required|exists:pieteikums,pieteikuma_id',
+//         'start_time' => 'required|date',
+//         'end_time' => 'required|date|after:start_time',
+//     ]);
+
+//     Rezervacija::create([
+//         'Computer_ID' => $request->Computer_ID,
+//         'pieteikuma_id' => $request->pieteikuma_id,
+//         'start_time' => $request->start_time,
+//         'end_time' => $request->end_time,
+//     ]);
+
+//     return redirect()->route('rezervacija.index')->with('success', 'Rezervācija izveidota veiksmīgi!');
+// }
+
 public function store(Request $request)
 {
+    dd($request);
     $validated = $request->validate([
-        'Computer_ID' => 'required|exists:computer,Computer_ID',
-        'pieteikuma_id' => 'required|exists:pieteikums,pieteikuma_id',
-        'start_time' => 'required|date',
-        'end_time' => 'required|date|after:start_time',
+        'pieteikuma_id' => 'required|exists:pieteikums,pieteikuma_id',  
     ]);
 
-    // Create the reservation
-    Rezervacija::create($validated);
 
-    return redirect()->route('rezervacija.index')->with('success', 'Rezervācija izveidota veiksmīgi!');
+    $pieteikums = Pieteikums::findOrFail($request->pieteikuma_id);
+
+    
+    $computer = $pieteikums->computer; 
+
+    //dd($computer,$pieteikums);
+    
+    // if (!$computer) {
+    //     return redirect()->back()->with('error', 'No associated computer found.');
+    // }
+    Rezervacija::create([
+        'Computer_ID' => $computer->Computer_ID,   
+        'pieteikuma_id' => $pieteikums->pieteikuma_id, 
+        'start_time' => $pieteikums->start_time,      
+        'end_time' => $pieteikums->end_time,          
+    ]);
+    
+
+    return redirect()->route('admin.dashboard')->with('success', 'Rezervācija izveidota veiksmīgi!');
 }
+
 
 }
 ?>

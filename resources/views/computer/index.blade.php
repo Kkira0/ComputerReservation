@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Computers, Parts, and Software</title>
-    <!-- Add Bootstrap CDN -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container mt-5">
         <h1 class="text-center mb-4">Computers, Parts, and Software</h1>
 
-        <!-- Button to create a new reservation (Pieteikums) -->
+        
         <div class="text-center mb-4">
         <a href="{{ route('pieteikums.create') }}" class="btn btn-success">Create a New Reservation</a>
         </div>
@@ -65,7 +65,7 @@
         @endforeach
     </div>
 
-    <!-- Add Bootstrap JS and Popper.js -->
+    
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
