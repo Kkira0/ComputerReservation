@@ -52,6 +52,13 @@ Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'adminIndex'])->name('admin.dashboard');
+    Route::get('/admin/computer', [DashboardController::class, 'adminComputer'])->name('admin.computer');
+    // Route for displaying the edit form for a computer (singular)
+Route::get('/computer/{computer}/edit', [ComputerController::class, 'edit'])->name('computer.edit');
+
+// Route to handle the update request for a specific computer
+Route::put('/computer/{computer}', [ComputerController::class, 'update'])->name('computer.update');
+
     Route::post('/admin/pieteikumi/{id}/approve', [Pieteikums_Controller::class, 'approve'])->name('admin.pieteikums.approve');
     Route::post('/admin/pieteikumi/{id}/deny', [Pieteikums_Controller::class, 'deny'])->name('admin.pieteikums.deny');
 

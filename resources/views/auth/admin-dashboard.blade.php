@@ -13,6 +13,7 @@
     <h1>Admin Dashboard</h1>
 
     <h3>Pending Reservation Requests</h3>
+    <a href="{{ route('admin.computer') }}" class="btn btn-warning btn-sm">Edit Computer</a>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -40,13 +41,15 @@
                             @csrf
                             <button class="btn btn-danger btn-sm">Deny</button>
                         </form>
+
                     </td>
                 </tr>
             @endforeach
         </tbody>
-    </table>
+    </table>    
 </div>
 @endsection
+
 
 
 </body>

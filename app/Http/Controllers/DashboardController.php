@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Pieteikums;
 use App\Models\Rezervacija;
+use App\Models\Computer;
 use Illuminate\Support\Facades\Log;
 
 
@@ -15,16 +16,6 @@ class DashboardController
         return view('dashboard'); 
     }
 
-//     public function adminIndex()
-// {
-
-//     $pendingPieteikumi = Pieteikums::with(['user', 'computer'])
-//                                     ->where('status', 'pending')
-//                                     ->get();
-
-
-//     return view('auth.admin-dashboard', compact('pendingPieteikumi'));
-// }
 
 public function adminIndex()
 {
@@ -35,21 +26,25 @@ public function adminIndex()
     return view('auth.admin-dashboard', compact('pendingPieteikumi'));
 }
 
+public function adminComputer(){
+    $computers = Computer::with(['softwares', 'pc_parts'])->get();
+        
+    return view('auth.admin-computer', compact('computers'));
+}
+
+
 
 public function approvePieteikums($id)
 {
     $pieteikums = Pieteikums::findOrFail($id);
 
-    // Ensure the Pieteikums is not already processed
     if ($pieteikums->status !== 'pending') {
         return redirect()->route('admin.dashboard')->with('error', 'Pieteikums has already been processed.');
     }
 
-    // Update the status to approved
     $pieteikums->status = 'approved';
     $pieteikums->save();
 
-    // Call the store method in Rezervacija_Controller to create a new reservation
     return redirect()->route('rezervacija.store', $pieteikums->id);
 }
 
@@ -57,7 +52,6 @@ public function denyPieteikums($id)
 {
     $pieteikums = Pieteikums::findOrFail($id);
 
-    // Set the status to declined
     $pieteikums->status = 'declined';
     $pieteikums->save();
 
