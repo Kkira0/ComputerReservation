@@ -7,11 +7,10 @@ use App\Models\Config;
 
 class Config_Controller
 {
-    
-
     public function index()
     {
-        $configs = Config::all(); // Retrieve all rows from the 'config' table
-        return view('config.index', ['config' => $configs]); // Pass the data to the view
+        $configs = Config::all(); 
+        return view('config.index', compact('configs'));
     }
+
 }

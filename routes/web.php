@@ -53,12 +53,34 @@ Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'adminIndex'])->name('admin.dashboard');
     Route::get('/admin/computer', [DashboardController::class, 'adminComputer'])->name('admin.computer');
-    // Route for displaying the edit form for a computer (singular)
-Route::get('/computer/{computer}/edit', [ComputerController::class, 'edit'])->name('computer.edit');
+    Route::get('/computers/create', [ComputerController::class, 'create'])->name('admin.computer.create'); // Create new computer
+    Route::post('/computers', [ComputerController::class, 'store'])->name('admin.computer.store'); // Store new computer
 
-// Route to handle the update request for a specific computer
-Route::put('/computer/{computer}', [ComputerController::class, 'update'])->name('computer.update');
 
+Route::get('/software/{software}/edit', [Software_Controller::class, 'edit'])->name('software.edit');
+Route::put('/software/{software}', [Software_Controller::class, 'update'])->name('software.update');
+
+
+    Route::get('/computer/{computer}/edit', [ComputerController::class, 'edit'])->name('computer.edit');
+
+    Route::put('/computer/{computer}', [ComputerController::class, 'update'])->name('computer.update');
+    Route::get('/software/create', [Computer_Software_Controller::class, 'createSoftware'])->name('software.create');
+    Route::post('/software', [Computer_Software_Controller::class, 'storeSoftware'])->name('software.store');
+    Route::get('/computer/{Computer_ID}/software/add', [Computer_Software_Controller::class, 'showAddExistingSoftwareForm'])->name('computer.addExistingSoftwareForm');
+
+    // Route to handle adding existing software to the computer
+    Route::post('/computer/{Computer_ID}/software', [Computer_Software_Controller::class, 'addExistingSoftwareToComputer'])->name('computer.addExistingSoftware');
+    Route::post('/computers/{Computer_ID}/software', [Computer_Software_Controller::class, 'addSoftwareToComputer'])->name('computer.addSoftware');
+
+
+       // Route to show the form to add existing hardware to a specific computer
+       Route::get('/computer/{Computer_ID}/pc_parts/add', [Computer_Parts_Controller::class, 'showAddExistingHardwareForm'])->name('computer.addExistingHardwareForm');
+       Route::get('/pc_parts/create', [Computer_Parts_Controller::class, 'createHardware'])->name('pc_parts.create');
+       Route::post('/pc_parts', [Computer_Parts_Controller::class, 'storeHardware'])->name('pc_parts.store');
+       // Route to handle adding existing hardware to the computer
+       Route::post('/computer/{Computer_ID}/pc_parts', [Computer_Parts_Controller::class, 'addExistingHardwareToComputer'])->name('computer.addExistingHardware');
+
+       Route::post('/computers/{Computer_ID}/pc_parts', [Computer_Software_Controller::class, 'addHardwareToComputer'])->name('computer.addHardware');
     Route::post('/admin/pieteikumi/{id}/approve', [Pieteikums_Controller::class, 'approve'])->name('admin.pieteikums.approve');
     Route::post('/admin/pieteikumi/{id}/deny', [Pieteikums_Controller::class, 'deny'])->name('admin.pieteikums.deny');
 
