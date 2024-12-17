@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Rezervacija extends Model
 {
     protected $table = "rezervacija";
-    protected $fillable = ["Computer_ID", "pieteikuma_id", "start_time", "end_time"];
+    protected $fillable = ["Computer_ID", "pieteikuma_id", "start_time", "end_time", "created_at", "updated_at"];
     protected $primaryKey = "Rezervacijas_ID";
-    public $timestamps = false;
+    public $timestamps = true;
 
     public function pieteikums()
 {

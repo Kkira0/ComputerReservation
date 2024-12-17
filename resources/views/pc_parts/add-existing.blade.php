@@ -10,7 +10,6 @@
     <div class="container mt-5">
         <h1>Add Existing Hardware to Computer: {{ $computer->PC_Name }}</h1>
 
-        <!-- Form to Add Existing Hardware -->
         <form action="{{ route('computer.addExistingHardware', $computer->Computer_ID) }}" method="POST">
             @csrf
             <div class="mb-3">

@@ -21,6 +21,7 @@
                 <th>Requested Computer</th>
                 <th>Start Time</th>
                 <th>End Time</th>
+                <th>Created at</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -31,6 +32,8 @@
                     <td>{{ $pieteikums->computer->Computer_ID }}</td>
                     <td>{{ $pieteikums->start_time }}</td>
                     <td>{{ $pieteikums->end_time }}</td>
+                    <td>{{ $pieteikums->created_at ? $pieteikums->created_at->format('Y-m-d H:i:s') : 'N/A' }}</td>
+
                     <td>
                         <form action="{{ route('admin.pieteikums.approve', $pieteikums->pieteikuma_id) }}" method="POST" style="display: inline-block;">
                             @csrf

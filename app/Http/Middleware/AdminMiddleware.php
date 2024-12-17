@@ -16,7 +16,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $user = session('user'); // Get the logged-in user from session
+        $user = session('user'); 
 
         if (!$user || $user->role->Role_name !== 'admin') {
             return redirect()->route('login')->with('error', 'Unauthorized access.');

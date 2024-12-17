@@ -10,7 +10,6 @@
     <div class="container mt-5">
         <h1>Add Existing Software to Computer: {{ $computer->PC_Name }}</h1>
 
-        <!-- Display any success or error messages -->
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @elseif (session('error'))

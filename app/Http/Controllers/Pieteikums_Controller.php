@@ -22,62 +22,34 @@ class Pieteikums_Controller
         return view('pieteikums.create', compact('computers'));
     }
     
- 
-    
-//     public function store(Request $request)
-// {
-    
-//         $request->validate([
-//             'first_name' => 'required|string',
-//             'last_name' => 'required|string',
-//             'phone' => 'required|string',
-//             'email' => 'required|email',
-//             'start_time' => 'required|date',
-//             'end_time' => 'required|date',
-//             'computers' => 'required|exists:computer,Computer_ID',
-//         ]);
 
-//         Pieteikums::create([
-//             'first_name' => $request->first_name,
-//             'last_name' => $request->last_name,
-//             'phone' => $request->phone,
-//             'email' => $request->email,
-//             'start_time' => $request->start_time,
-//             'end_time' => $request->end_time,
-//             'Computers' => $request->computers,
-//             'user_id' => $request->idUsers, 
-//             'status' => 'pending',
-//         ]);
+    public function store(Request $request)
+    {
+        $request->validate([
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'phone' => 'required|string',
+            'email' => 'required|email',
+            'start_time' => 'required|date',
+            'end_time' => 'required|date|after:start_time',
+            'computers' => 'required|exists:computer,Computer_ID',
+        ]);
 
-//         return redirect()->route('pieteikums.index')->with('success', 'Pieteikums request created!');
-//     }
+        Pieteikums::create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'start_time' => $request->start_time,
+            'end_time' => $request->end_time,
+            
+            'Computers' => $request->computers,
+            'user_id' => auth()->id(), 
+            'status' => 'pending',
+        ]);
 
-public function store(Request $request)
-{
-    $request->validate([
-        'first_name' => 'required|string',
-        'last_name' => 'required|string',
-        'phone' => 'required|string',
-        'email' => 'required|email',
-        'start_time' => 'required|date',
-        'end_time' => 'required|date|after:start_time',
-        'computers' => 'required|exists:computer,Computer_ID',
-    ]);
-
-    Pieteikums::create([
-        'first_name' => $request->first_name,
-        'last_name' => $request->last_name,
-        'phone' => $request->phone,
-        'email' => $request->email,
-        'start_time' => $request->start_time,
-        'end_time' => $request->end_time,
-        'Computers' => $request->computers,
-        'user_id' => auth()->id(), 
-        'status' => 'pending',
-    ]);
-
-    return redirect()->route('pieteikums.index')->with('success', 'Pieteikums request created!');
-}
+        return redirect()->route('pieteikums.index')->with('success', 'Pieteikums request created!');
+    }
 
 
 
@@ -92,7 +64,8 @@ public function store(Request $request)
             'Computer_ID' => $computer->Computer_ID,   
             'pieteikuma_id' => $pieteikums->pieteikuma_id, 
             'start_time' => $pieteikums->start_time,      
-            'end_time' => $pieteikums->end_time,          
+            'end_time' => $pieteikums->end_time,   
+            'created_at' => $pieteikums->created_at,       
         ]);
         return redirect()->route('rezervacija.index')->with('success', 'Failes Successfully! Pieteikums approved successfully!');
     }

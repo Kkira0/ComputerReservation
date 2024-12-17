@@ -28,7 +28,6 @@ class AuthController
         if ($user && $user->password === $request->password) {
             session(['user' => $user]);
     
-            // Redirect admins to admin dashboard
             if ($user->role->Role_name === 'admin') {
                 return redirect()->route('admin.dashboard');
             }

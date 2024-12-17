@@ -79,6 +79,9 @@ Route::put('/software/{software}', [Software_Controller::class, 'update'])->name
        Route::post('/pc_parts', [Computer_Parts_Controller::class, 'storeHardware'])->name('pc_parts.store');
        // Route to handle adding existing hardware to the computer
        Route::post('/computer/{Computer_ID}/pc_parts', [Computer_Parts_Controller::class, 'addExistingHardwareToComputer'])->name('computer.addExistingHardware');
+       Route::delete('/computer/{Computer_ID}/destroy', [ComputerController::class, 'destroy'])->name('computer.destroy');
+       Route::delete('/computer/{computer_id}/software/{software_id}/destroy', [ComputerController::class, 'destroySoftware'])->name('computer.software.destroy');
+       Route::delete('/computer/{computer_id}/pc_parts/{part_id}/destroy', [ComputerController::class, 'destroyHardware'])->name('computer.pc_parts.destroy');
 
        Route::post('/computers/{Computer_ID}/pc_parts', [Computer_Software_Controller::class, 'addHardwareToComputer'])->name('computer.addHardware');
     Route::post('/admin/pieteikumi/{id}/approve', [Pieteikums_Controller::class, 'approve'])->name('admin.pieteikums.approve');

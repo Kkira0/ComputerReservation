@@ -14,8 +14,8 @@
         <h2>Computers</h2>
         <a href="{{ route('admin.dashboard') }}" class="btn btn-warning btn-sm">Back</a>
         <a href="{{ route('admin.computer.create') }}">
-                        <button>Add New Computer</button>
-                    </a>
+            <button>Add New Computer</button>
+        </a>
         <a href="{{ route('software.create') }}">
             <button class="btn btn-success btn-sm">Create New Software</button>
         </a>
@@ -23,8 +23,6 @@
             <button class="btn btn-success btn-sm">Create New Hardware</button>
         </a>
 
-
-        <!-- Loop through the computers and display the details -->
         @foreach($computers as $computer)
             <div class="card mb-4 shadow-sm">
                 <div class="card-header bg-primary text-white">
@@ -39,64 +37,58 @@
                     @else
                         <ul class="list-group mb-3">
                             @foreach ($computer->softwares as $software)
-                                <li class="list-group-item">{{ $software->Software_Name }} (Version: {{ $software->Version }})</li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>{{ $software->Software_Name }} (Version: {{ $software->Version }})</span>
+                                    
+                                    <!-- Form to unlink the software from this computer -->
+                                    <form action="{{ route('computer.software.destroy', ['computer_id' => $computer->Computer_ID, 'software_id' => $software->Software_ID]) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to remove this software from the computer?')">Remove</button>
+                                    </form>
+                                </li>
                             @endforeach
                         </ul>
                     @endif
 
                     <a href="{{ route('computer.addExistingSoftwareForm', $computer->Computer_ID) }}" class="btn btn-primary btn-sm">Add Existing Software</a>
 
-                    <!-- Modal for Adding Existing Software -->
-                    <div class="modal fade" id="addSoftwareModal{{ $computer->Computer_ID }}" tabindex="-1" aria-labelledby="addSoftwareModalLabel{{ $computer->Computer_ID }}" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="addSoftwareModalLabel{{ $computer->Computer_ID }}">Add Software to {{ $computer->PC_Name }}</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="{{ route('computer.addSoftware', $computer->Computer_ID) }}" method="POST">
-                                        @csrf
-                                        <div class="mb-3">
-                                            <label for="software" class="form-label">Choose Software</label>
-                                            <select name="software_id" id="software" class="form-select" required>
-                                                @foreach($computer->softwares as $software)
-                                                    <option value="{{ $software->Software_ID }}">{{ $software->Software_Name }} (Version: {{ $software->Version }})</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Add Software</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                                    
                     <h4>Hardware Parts:</h4>
                     @if ($computer->pc_parts->isEmpty())
                         <p>No hardware parts installed.</p>
                     @else
-                        <ul class="list-group">
+                        <ul class="list-group mb-3">
                             @foreach ($computer->pc_parts as $part)
-                                <li class="list-group-item">{{ $part->Part_name }} - {{ $part->Part_type }} ({{ $part->apraksts }})</li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>{{ $part->Part_name }} - {{ $part->Part_type }} ({{ $part->apraksts }})</span>
+                            
+                                    <form action="{{ route('computer.pc_parts.destroy', ['computer_id' => $computer->Computer_ID, 'part_id' => $part->Part_ID]) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to remove this hardware from the computer?')">Remove</button>
+                                    </form>
+                                </li>
                             @endforeach
                         </ul>
                     @endif
 
                     <a href="{{ route('computer.addExistingHardwareForm', $computer->Computer_ID) }}" class="btn btn-primary btn-sm">Add Existing Hardware</a>
-                    
-                    
+                    <br>
                     <br>
 
-
-                    <!-- Edit Button for Each Computer -->
                     <a href="{{ route('computer.edit', $computer->Computer_ID) }}" class="btn btn-warning btn-sm">Edit Computer</a>
-                    
+                    <br>
+                    <br>
+                    <form action="{{route('computer.destroy', $computer->Computer_ID)}}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Delete Computer</button>
+                    </form>
                 </div>
             </div>
         @endforeach
 
-        <!-- Logout Button -->
         <form action="{{ route('logout') }}" method="POST">
             @csrf
             <button type="submit" class="btn btn-danger">Logout</button>

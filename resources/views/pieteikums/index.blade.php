@@ -4,24 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pieteikums List</title>
-    <!-- Add Bootstrap CSS -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container mt-4">
         <h1 class="mb-4">All Reservations (Pieteikums)</h1>
 
-        <!-- Display any success message -->
+        
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
-        <!-- Button to create new reservation -->
+        
         <div class="mb-3">
             <a href="{{ route('pieteikums.create') }}" class="btn btn-primary">Create New Reservation</a>
         </div>
 
-        <!-- Reservation Table -->
+        
         <div class="table-responsive">
             <table class="table table-striped table-bordered">
                 <thead class="table-dark">
@@ -32,6 +32,7 @@
                         <th>Email</th>
                         <th>Start Time</th>
                         <th>End Time</th>
+                        <th>Created at</th>
                         <th>Status</th>
                         <th>Computer</th>
                     </tr>
@@ -45,6 +46,8 @@
                             <td>{{ $reservation->email }}</td>
                             <td>{{ $reservation->start_time }}</td>
                             <td>{{ $reservation->end_time }}</td>
+                            <td>{{ $reservation->created_at ? $reservation->created_at->format('Y-m-d H:i:s') : 'N/A' }}</td>
+
                             <td>{{ ucfirst($reservation->status) }}</td>
                             <td>{{ $reservation->Computers }}</td>
                         </tr>
@@ -54,7 +57,7 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS and Popper.js (optional, for dropdowns or modals) -->
+    
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
 </body>

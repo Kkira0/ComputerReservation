@@ -23,6 +23,7 @@
                 <th>Pieteikums</th>
                 <th>Sākuma laiks</th>
                 <th>Beigu laiks</th>
+                <th>Created at</th>
             </tr>
         </thead>
         <tbody>
@@ -33,6 +34,7 @@
         <td>{{ $rezervacija->pieteikums->pieteikuma_id ?? 'N/A' }}</td>
         <td>{{ $rezervacija->start_time }}</td>
         <td>{{ $rezervacija->end_time }}</td>
+        <td>{{ $rezervacija->created_at ? $rezervacija->created_at->format('Y-m-d H:i:s') : 'N/A' }}</td>
     </tr>
     @endforeach
 </tbody>
