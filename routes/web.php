@@ -50,6 +50,7 @@ Route::post('register', [AuthController::class, 'register'])->name('register.sub
 Route::get('dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
+
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'adminIndex'])->name('admin.dashboard');
     Route::get('/admin/computer', [DashboardController::class, 'adminComputer'])->name('admin.computer');

@@ -74,4 +74,3 @@ class AuthController
         return redirect()->route('login');  
     }
 }
-
