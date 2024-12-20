@@ -48,7 +48,7 @@ class Pieteikums_Controller
             'status' => 'pending',
         ]);
 
-        return redirect()->route('pieteikums.index')->with('success', 'Pieteikums request created!');
+        return redirect()->route('computer.index')->with('success', 'Pieteikums request created!');
     }
 
 

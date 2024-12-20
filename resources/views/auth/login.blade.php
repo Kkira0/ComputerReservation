@@ -1,4 +1,3 @@
-<!-- resources/views/auth/login.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +10,6 @@
     <div class="container">
         <h2 class="mt-5">Login</h2>
 
-        <!-- Display error message if there is any -->
         @if(session('error'))
             <div class="alert alert-danger">{{ session('error') }}</div>
         @endif
@@ -28,7 +26,6 @@
     <button type="submit" class="btn btn-primary">Login</button>
 </form>
 
-        <!-- Link to register page (if user doesn't have an account) -->
         <p class="mt-3">Don't have an account? <a href="{{ route('register') }}">Register</a></p>
     </div>
 

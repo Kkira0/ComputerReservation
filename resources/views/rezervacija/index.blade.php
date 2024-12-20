@@ -14,7 +14,9 @@
 @section('content')
 <div class="container">
     <h1>Rezervācijas</h1>
-    <a href="{{ route('rezervacija.create') }}" class="btn btn-primary mb-3">Izveidot jaunu rezervāciju</a>
+    <!-- <a href="{{ route('rezervacija.create') }}" class="btn btn-primary mb-3">Izveidot jaunu rezervāciju</a> -->
+     
+    <a href="{{ route('admin.dashboard') }}" class="btn btn-warning btn-sm">Back</a>
     <table class="table table-bordered">
         <thead>
             <tr>

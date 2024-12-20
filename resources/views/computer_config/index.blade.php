@@ -7,12 +7,12 @@
 </head>
 <style>
         table {
-            border: 1px solid black;  /* Adds a black border around the table */
-            border-collapse: collapse;  /* Optional: Makes the table borders collapse into a single border */
+            border: 1px solid black;  
+            border-collapse: collapse;  
         }
         th, td {
-            padding: 8px;  /* Optional: Adds padding inside table cells */
-            text-align: left;  /* Optional: Aligns text to the left */
+            padding: 8px;  
+            text-align: left; 
         }
     </style>
 </head>

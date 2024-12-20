@@ -30,12 +30,6 @@ Route::get('/pc_parts', [PC_Parts_Controller::class, 'index']);
 Route::get('/pieteikums', [Pieteikums_Controller::class, 'index'])->name('pieteikums.index');
 Route::get('/pieteikums/create', [Pieteikums_Controller::class, 'create'])->name('pieteikums.create');
 Route::post('/pieteikums', [Pieteikums_Controller::class, 'store'])->name('pieteikums.store');
-
-// Route::get('/rezervacija', [Rezervacija_Controller::class, 'index'])->name('rezervacija.index');
-// Route::get('/rezervacija/create', [Rezervacija_Controller::class, 'create'])->name('rezervacija.create'); 
-// Route::delete('/rezervacija/{id}', [Rezervacija_Controller::class, 'deny'])->name('rezervacija.deny');
-// Route::get('/rezervacija/store/{pieteikums}', [Rezervacija_Controller::class, 'store'])->name('rezervacija.store');
-
 Route::get('rezervacija', [Rezervacija_Controller::class, 'index'])->name('rezervacija.index');
 Route::get('rezervacija/create', [Rezervacija_Controller::class, 'create'])->name('rezervacija.create');
 Route::post('rezervacija', [Rezervacija_Controller::class, 'store'])->name('rezervacija.store');
@@ -54,37 +48,26 @@ Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'adminIndex'])->name('admin.dashboard');
     Route::get('/admin/computer', [DashboardController::class, 'adminComputer'])->name('admin.computer');
-    Route::get('/computers/create', [ComputerController::class, 'create'])->name('admin.computer.create'); // Create new computer
-    Route::post('/computers', [ComputerController::class, 'store'])->name('admin.computer.store'); // Store new computer
-
-
-Route::get('/software/{software}/edit', [Software_Controller::class, 'edit'])->name('software.edit');
-Route::put('/software/{software}', [Software_Controller::class, 'update'])->name('software.update');
-
-
+    Route::get('/computers/create', [ComputerController::class, 'create'])->name('admin.computer.create'); 
+    Route::post('/computers', [ComputerController::class, 'store'])->name('admin.computer.store'); 
+    Route::get('/software/{software}/edit', [Software_Controller::class, 'edit'])->name('software.edit');
+    Route::put('/software/{software}', [Software_Controller::class, 'update'])->name('software.update');
     Route::get('/computer/{computer}/edit', [ComputerController::class, 'edit'])->name('computer.edit');
-
     Route::put('/computer/{computer}', [ComputerController::class, 'update'])->name('computer.update');
     Route::get('/software/create', [Computer_Software_Controller::class, 'createSoftware'])->name('software.create');
     Route::post('/software', [Computer_Software_Controller::class, 'storeSoftware'])->name('software.store');
     Route::get('/computer/{Computer_ID}/software/add', [Computer_Software_Controller::class, 'showAddExistingSoftwareForm'])->name('computer.addExistingSoftwareForm');
-
-    // Route to handle adding existing software to the computer
     Route::post('/computer/{Computer_ID}/software', [Computer_Software_Controller::class, 'addExistingSoftwareToComputer'])->name('computer.addExistingSoftware');
     Route::post('/computers/{Computer_ID}/software', [Computer_Software_Controller::class, 'addSoftwareToComputer'])->name('computer.addSoftware');
+    Route::get('/computer/{Computer_ID}/pc_parts/add', [Computer_Parts_Controller::class, 'showAddExistingHardwareForm'])->name('computer.addExistingHardwareForm');
+    Route::get('/pc_parts/create', [Computer_Parts_Controller::class, 'createHardware'])->name('pc_parts.create');
+    Route::post('/pc_parts', [Computer_Parts_Controller::class, 'storeHardware'])->name('pc_parts.store');
+    Route::post('/computer/{Computer_ID}/pc_parts', [Computer_Parts_Controller::class, 'addExistingHardwareToComputer'])->name('computer.addExistingHardware');
+    Route::delete('/computer/{Computer_ID}/destroy', [ComputerController::class, 'destroy'])->name('computer.destroy');
+    Route::delete('/computer/{computer_id}/software/{software_id}/destroy', [ComputerController::class, 'destroySoftware'])->name('computer.software.destroy');
+    Route::delete('/computer/{computer_id}/pc_parts/{part_id}/destroy', [ComputerController::class, 'destroyHardware'])->name('computer.pc_parts.destroy');
 
-
-       // Route to show the form to add existing hardware to a specific computer
-       Route::get('/computer/{Computer_ID}/pc_parts/add', [Computer_Parts_Controller::class, 'showAddExistingHardwareForm'])->name('computer.addExistingHardwareForm');
-       Route::get('/pc_parts/create', [Computer_Parts_Controller::class, 'createHardware'])->name('pc_parts.create');
-       Route::post('/pc_parts', [Computer_Parts_Controller::class, 'storeHardware'])->name('pc_parts.store');
-       // Route to handle adding existing hardware to the computer
-       Route::post('/computer/{Computer_ID}/pc_parts', [Computer_Parts_Controller::class, 'addExistingHardwareToComputer'])->name('computer.addExistingHardware');
-       Route::delete('/computer/{Computer_ID}/destroy', [ComputerController::class, 'destroy'])->name('computer.destroy');
-       Route::delete('/computer/{computer_id}/software/{software_id}/destroy', [ComputerController::class, 'destroySoftware'])->name('computer.software.destroy');
-       Route::delete('/computer/{computer_id}/pc_parts/{part_id}/destroy', [ComputerController::class, 'destroyHardware'])->name('computer.pc_parts.destroy');
-
-       Route::post('/computers/{Computer_ID}/pc_parts', [Computer_Software_Controller::class, 'addHardwareToComputer'])->name('computer.addHardware');
+    Route::post('/computers/{Computer_ID}/pc_parts', [Computer_Software_Controller::class, 'addHardwareToComputer'])->name('computer.addHardware');
     Route::post('/admin/pieteikumi/{id}/approve', [Pieteikums_Controller::class, 'approve'])->name('admin.pieteikums.approve');
     Route::post('/admin/pieteikumi/{id}/deny', [Pieteikums_Controller::class, 'deny'])->name('admin.pieteikums.deny');
 

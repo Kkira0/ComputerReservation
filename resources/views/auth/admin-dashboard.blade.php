@@ -14,6 +14,7 @@
 
     <h3>Pending Reservation Requests</h3>
     <a href="{{ route('admin.computer') }}" class="btn btn-warning btn-sm">Edit Computer</a>
+    <a href="{{ route('rezervacija.index') }}" class="btn btn-warning btn-sm">Visas rezervācijas</a>
     <table class="table table-striped">
         <thead>
             <tr>
