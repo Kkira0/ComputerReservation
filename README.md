@@ -17,7 +17,7 @@
 
 ## Database Tables
 
-![Database Tables](database.PNG)
+![Database Tables](database.png)
 
 
 ## Installation ⚒️
