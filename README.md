@@ -28,10 +28,10 @@ Installing and running Laravel is super easy, please Follow below steps and you 
 1. Clone the repository:
 
 ```bash
-   git clone https://github.com/Kkira0/computer-test.git
+   git clone https://github.com/Kkira0/ComputerReservation.git
 ```
  ```bash
-   cd computer-test
+   cd ComputerReservation
 ```
 2. Use the following command to install the composer
 
