@@ -12,8 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         
-        Schema::table('rezervacija', function (Blueprint $table) {
-            $table->timestamps(); // Adds both created_at and updated_at columns
+        Schema::create('rezervacija', function (Blueprint $table) {
+            $table->id(); // Primary key
+            $table->string('name'); // Example field
+            $table->timestamps(); // Creates created_at and updated_at columns
         });
     }
 
@@ -22,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('rezervacija', function (Blueprint $table) {
-            $table->dropTimestamps(); // Removes both created_at and updated_at columns
-        });
+        Schema::dropIfExists('rezervacija');
     }
 };
