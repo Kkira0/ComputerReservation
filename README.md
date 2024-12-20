@@ -7,27 +7,77 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## Front End
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+![Front End](Capture5.PNG)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Back End
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+![Back End](Capture8.PNG)
 
-## Learning Laravel
+## Database Tables
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+![Database Tables](database.PNG)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Installation ⚒️
+
+Installing and running Laravel is super easy, please Follow below steps and you will be ready to rock 🤘
+
+1. Open the terminal 
+1. Clone the repository:
+
+```bash
+   git clone https://github.com/Kkira0/computer-test.git
+```
+ ```bash
+   cd computer-test
+```
+2. Use the following command to install the composer
+
+```bash
+composer install
+```
+3. After installing open
+```bash
+code .
+```
+
+4. Then copy folders with 
+
+```bash
+cp .env.example .env
+```
+
+5. Run the following command to generate the key
+
+```bash
+php artisan key:generate
+```
+
+6. Migrate:
+
+```bash
+php artisan migrate
+```
+
+7. To serve the application, you need to run the following command in the project directory
+
+```bash
+php artisan serve
+```
+
+8. Now navigate to the given address, and you will see your application is running.🥳
+
+## Admin Credentials
+Admin: 
+```bash 
+admin@gmail.com
+```
+Password: 
+```bash
+admin123
+```
 
 ## Laravel Sponsors
 
